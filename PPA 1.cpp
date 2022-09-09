@@ -176,7 +176,7 @@ void menuAd()
 			{
 				while (getchar() != '\n');
 			    cout << "Ingrese cliente" << endl;
-				cin.getline(cli.NombrCL, 50, '\n');
+				cin.getline(cli.NombrCL, 30, '\n');
 				cout << "Ingrese alias" << endl;
 				cin.getline(cli.AL, 15, '\n');
 				cout << "Ingrese teléfono" << endl;
@@ -196,7 +196,7 @@ void menuAd()
 			do {
 				while (getchar() != '\n');
 				cout << "Ingrese cliente a eliminar" << endl;
-				cin.getline(cli .NombrCL, 50, '\n');
+				cin.getline(cli .NombrCL, 30, '\n');
 				cout << "Ingrese alias a eliminar" << endl;
 				cin.getline(cli.AL, 15, '\n');
 				cout << "Ingrese teléfono a eliminar" << endl;
