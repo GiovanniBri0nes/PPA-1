@@ -49,17 +49,17 @@ int main()
 	cin.getline(com, 15, '\n');
 	cout << "Nombre de usuario" << endl;
 	cin.getline(usu, 15, '\n');
-	cout << "Contraseña" << endl;
+	cout << "ContraseÃ±a" << endl;
 	cin.getline(contr, 15, '\n');
 	cout << "***REGISTRO DE USUARIO ADMINISTRADOR***" << endl;
 	cout << "Comercio" << endl;
 	cin.getline(com2, 15, '\n');
 	cout << "Usuario" << endl;
 	cin.getline(usuA, 15, '\n');
-	cout << "Contraseña" << endl;
+	cout << "ContraseÃ±a" << endl;
 	cin.getline(contrA, 15, '\n');
-	cout << "***ADMINISTRADOR REGISTRADO CON ÉXTIO***" << endl;
-	cout << "¿Es usted un administrador?" << endl;
+	cout << "***ADMINISTRADOR REGISTRADO CON Ã‰XTIO***" << endl;
+	cout << "Â¿Es usted un administrador?" << endl;
 	cout << "1-Si     2-No" << endl;
 	cin >> resp;
 
@@ -70,7 +70,7 @@ int main()
 		cin.getline(com3, 15, '\n');
 		cout << "Usuario" << endl;
 		cin.getline(usu3, 15, '\n');
-		cout << "Contraseña" << endl;
+		cout << "ContraseÃ±a" << endl;
 		cin.getline(contr3, 15, '\n');
 
 		if (strcmp(com3, com2) == 0 && strcmp(usu3, usuA) == 0 && strcmp(contr3, contrA) == 0)
@@ -96,14 +96,14 @@ void menuAd()
 		cout << "Ingrese 2 para Alta De NUevo Cajero" << endl;
 		cout << "Ingrese 3 para Baja De Usuario Tipo Cajero" << endl;
 		cout << "Ingrese 4 para Actualizar Usuario" << endl;
-		cout << "Ingrese 5 para Restablecer Contraseña" << endl;
+		cout << "Ingrese 5 para Restablecer ContraseÃ±a" << endl;
 		cout << "Ingrese 6 para ver el Listado de Usuarios" << endl;
 		cout << "Ingrese 7 para Alta De Cliente " << endl;
 		cout << "Ingrese 8 para Baja De Cliente " << endl;
 		cout << "Ingrese 9 para Actualizar Clientes " << endl;
 		cout << "Ingrese 10 para ver el Listado de Clientes " << endl;
-		cout << "Ingrese 11 para Alta De Promoción " << endl;
-		cout << "Ingrese 12 para Baja De Promoción " << endl;
+		cout << "Ingrese 11 para Alta De PromociÃ³n " << endl;
+		cout << "Ingrese 12 para Baja De PromociÃ³n " << endl;
 		cout << "Ingrese 13 para ver el Listado de Promociones " << endl;
 		cout << "Ingrese 14 para Alta De Consumo " << endl;
 		cout << "Ingrese 15 para ver el Listado De Consumos " << endl;
@@ -120,9 +120,9 @@ void menuAd()
 			while (getchar() != '\n');
 			cout << "Ingrese usuario" << endl;
 			cin.getline(adm.NombrAd, 50, '\n');
-			cout << "Ingrese contraseña" << endl;
+			cout << "Ingrese contraseÃ±a" << endl;
 			cin.getline(adm.ContrAd, 15, '\n');
-			cout << "¿Dese aregar otro administrador?" << endl;
+			cout << "Â¿Dese aregar otro administrador?" << endl;
 			cout << "1-Si     2-No" << endl;
 			cin >> decision;
 			}while (decision == 1);
@@ -135,9 +135,9 @@ void menuAd()
 				while (getchar() != '\n');
 				cout << "Ingrese cajero" << endl;
 				cin.getline(caj.NombrCA, 50, '\n');
-				cout << "Ingrese contraseña" << endl;
+				cout << "Ingrese contraseÃ±a" << endl;
 				cin.getline(caj.ContrCA, 15, '\n');
-				cout << "¿Dese aregar otro cajero?" << endl;
+				cout << "Â¿Dese aregar otro cajero?" << endl;
 				cout << "1-Si     2-No" << endl;
 				cin >> decision;
 			} while (decision == 1);
@@ -150,9 +150,9 @@ void menuAd()
 				while (getchar() != '\n');
 				cout << "Ingrese cajero a eliminar" << endl;
 				cin.getline(caj.NombrCA, 50, '\n');
-				cout << "Ingrese contraseña a eliminar" << endl;
+				cout << "Ingrese contraseÃ±a a eliminar" << endl;
 				cin.getline(caj.ContrCA, 15, '\n');
-				cout << "¿Dese eleminar otro cajero?" << endl;
+				cout << "Â¿Dese eleminar otro cajero?" << endl;
 				cout << "1-Si     2-No" << endl;
 			} while (decision == 1);
 			borrar_CAJ(caj.NombrCA, caj.ContrCA);
@@ -179,12 +179,12 @@ void menuAd()
 				cin.getline(cli.NombrCL, 50, '\n');
 				cout << "Ingrese alias" << endl;
 				cin.getline(cli.AL, 15, '\n');
-				cout << "Ingrese teléfono" << endl;
+				cout << "Ingrese telÃ©fono" << endl;
 				cin >> cli.TEL;
 				while (getchar() != '\n');
 				cout << "Ingrese email" << endl;
 				cin.getline(cli.EM, 25, '\n');
-				cout << "¿Dese aregar otro cliente?" << endl;
+				cout << "Â¿Dese aregar otro cliente?" << endl;
 				cout << "1-Si     2-No" << endl;
 				cin >> decision;
 			} while (decision == 1);
@@ -199,12 +199,12 @@ void menuAd()
 				cin.getline(cli .NombrCL, 50, '\n');
 				cout << "Ingrese alias a eliminar" << endl;
 				cin.getline(cli.AL, 15, '\n');
-				cout << "Ingrese teléfono a eliminar" << endl;
+				cout << "Ingrese telÃ©fono a eliminar" << endl;
 				cin >> cli.TEL;
 				while (getchar() != '\n');
 				cout << "Ingrese correo a eliminar" << endl;
 				cin.getline(cli.EM, 25, '\n');
-				cout << "¿Dese eleminar otro cajero?" << endl;
+				cout << "Â¿Dese eleminar otro cajero?" << endl;
 				cout << "1-Si     2-No" << endl;
 			} while (decision == 1);
 			return menuAd();
@@ -304,8 +304,8 @@ void agregar_CAJ(char NCA[50], char CCA[15])
 		aux_dC->siguienteCA = new nodo_dC;
 		aux_dC->siguienteCA->siguienteCA = nullptr;
 		aux_dC = aux_dC->siguienteCA;
-		aux_dC->NombrCA[45] = NCA[45];
-		aux_dC->ContrCA[14] = CCA[14];
+		aux_dC->NombrCA[50] = NCA[50];
+		aux_dC->ContrCA[15] = CCA[15];
 	}
 	
 }
@@ -319,7 +319,7 @@ void borrar_CAJ(char NCA[50], char CCA[15])
 
 	//Si el elemento a borrar es el primer nodo
 	aux_dC = raiz_dC;
-	if (aux_dC->NombrCA[45] == NCA[45] && aux_dC->ContrCA[15] == CCA[15])
+	if (aux_dC->NombrCA[50] == NCA[50] && aux_dC->ContrCA[15] == CCA[15])
 	{
 		raiz_dC = raiz_dC->siguienteCA;
 		raiz_dC->anteriorCA = nullptr;
@@ -328,14 +328,14 @@ void borrar_CAJ(char NCA[50], char CCA[15])
 	else
 	{
 		//Si el elemento a borrar es algun nodo de en medio
-		while ((aux_dC != nullptr && aux_dC->NombrCA[45] != NCA[45]) && (aux_dC != nullptr && aux_dC->ContrCA[14] != CCA[14]))
+		while ((aux_dC != nullptr && aux_dC->NombrCA[50] != NCA[50]) && (aux_dC != nullptr && aux_dC->ContrCA[15] != CCA[15]))
 		{
 			aux_dC = aux_dC->siguienteCA;
 		}
 
 		if (aux_dC != nullptr)
 		{
-			if ((aux_dC->NombrCA[45] == NCA[45]) && (aux_dC->ContrCA[15] == CCA[15]))
+			if ((aux_dC->NombrCA[50] == NCA[50]) && (aux_dC->ContrCA[15] == CCA[15]))
 			{
 
 				nodo_dC* temporal = aux_dC;
