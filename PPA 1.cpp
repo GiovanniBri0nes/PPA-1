@@ -1,94 +1,267 @@
 #include <iostream>
-#include <locale.h>
 #include <string>
+#include <string.h>
+#include <locale.h>
 #include <fstream>
 using namespace std;
 
 fstream Archivo;
 
-struct nodo_dA {
-	char NombrAd[50], ContrAd[15];
-	nodo_dA* siguienteAd;
-	nodo_dA* anteriorAd;
-}adm;
-nodo_dA* raiz_dA = nullptr;
-nodo_dA* aux_dA = nullptr;
-struct nodo_dC {
-	char NombrCA[50], ContrCA[15];
-	nodo_dC* siguienteCA;
-	nodo_dC* anteriorCA;
-}caj;
-nodo_dC* raiz_dC = nullptr;
-nodo_dC* aux_dC = nullptr;
-struct nodo_dCL {
-	char NombrCL[30], AL[15],  EM[25];
-	long long TEL;
-	nodo_dCL* siguienteCL;
-	nodo_dCL* anteriorCL;
-}cli;
-nodo_dCL* raiz_dCL = nullptr;
-nodo_dCL* aux_dCL = nullptr;
 
-void menuAd();
-void agregar_ADM(char[], char[]);
-void agregar_CAJ(char[], char[]);
-void borrar_CAJ(char[], char[]);
-void alta_Cliente(char[], char[],long long, char[]);
-void baja_Cliente(char[], char[], long long , char[]);
-void impr_clien();
+struct nodo_dA {
+	string NombrAd, ContrAd;
+	nodo_dA* sigAd;
+};
+nodo_dA* raiz = nullptr;
+nodo_dA* aux = nullptr;
+
+struct nodo_dC {
+	string NombrCA, ContrCA;
+	nodo_dC* sigCA;
+};
+nodo_dC* raiz_CA = nullptr;
+nodo_dC* aux_CA = nullptr;
+
+struct nodo_dCL {
+	string NombrCL, EM, Al;
+	long long Tel;
+	nodo_dCL* sigCL;
+};
+nodo_dCL* raiz_CL = nullptr;
+nodo_dCL* aux_CL = nullptr;
+
+struct nodo_PR {
+	string NombrPR;
+	float prc;
+	int MPR;
+	nodo_PR* sigPR;
+};
+nodo_PR* raiz_PR = nullptr;
+nodo_PR* aux_PR = nullptr;
+
+void agregar_adm(string, string);
+void agregar_caj(string);
+void baja_caj(string, string);
+void agregar_cl(string,string, string, long long, string);
+void baja_cl(string);
+void agregar_prom(string, float, int);
+void menu_Ad();
+void list_cl();
+void list_usu();
 void leer_archv_adm();
 void abrir_archivoAd();
+void leer_archv_caj();
+void abrir_archivoCaj();
 
 int main()
 {
 	setlocale(LC_CTYPE, "Spanish");
-	char com[15], usu[15], contr[15], com2[15], usuA[15], contrA[15], com3[15], usu3[15], contr3[15];
 	int resp = 0;
+
+	char usu[50], contr[15], com[15], usu2[50], contr2[15], com2[15], usu3[50], contr3[15], com3[15];
+
 	cout << "***INICIAR SESION***" << endl;
 	cout << "Comercio" << endl;
 	cin.getline(com, 15, '\n');
 	cout << "Nombre de usuario" << endl;
-	cin.getline(usu, 15, '\n');
+	cin.getline(usu, 50, '\n');
 	cout << "Contraseña" << endl;
 	cin.getline(contr, 15, '\n');
 	cout << "***REGISTRO DE USUARIO ADMINISTRADOR***" << endl;
 	cout << "Comercio" << endl;
 	cin.getline(com2, 15, '\n');
 	cout << "Usuario" << endl;
-	cin.getline(usuA, 15, '\n');
+	cin.getline(usu2, 50, '\n');
 	cout << "Contraseña" << endl;
-	cin.getline(contrA, 15, '\n');
+	cin.getline(contr2, 15, '\n');
 	cout << "***ADMINISTRADOR REGISTRADO CON ÉXTIO***" << endl;
 	cout << "¿Es usted un administrador?" << endl;
 	cout << "1-Si     2-No" << endl;
 	cin >> resp;
-
 	if (resp == 1)
 	{
 		while (getchar() != '\n');
 		cout << "Comercio" << endl;
 		cin.getline(com3, 15, '\n');
 		cout << "Usuario" << endl;
-		cin.getline(usu3, 15, '\n');
+		cin.getline(usu3, 50, '\n');
 		cout << "Contraseña" << endl;
 		cin.getline(contr3, 15, '\n');
 
-		if (strcmp(com3, com2) == 0 && strcmp(usu3, usuA) == 0 && strcmp(contr3, contrA) == 0)
+		if (strcmp(com3, com2) == 0 && strcmp(usu3, usu2) == 0 && strcmp(contr3, contr2) == 0)
 		{
-			menuAd();
-		}
-		else
-		{
-			return main();
+			menu_Ad();
 		}
 
 	}
+}
+void agregar_adm(string NA, string CA)
+{
+	if (raiz == nullptr)
+	{
+		raiz = new nodo_dA;
+		raiz->NombrAd = NA;
+		raiz->ContrAd = CA;
+		raiz->sigAd = nullptr;
+		aux = raiz;
+	}
+	else
+	{
+		aux= raiz;
+		while (aux->sigAd != nullptr)
+		{
+			aux = aux->sigAd;
+		}
+		aux->sigAd = new nodo_dA;
+		aux->sigAd->sigAd = nullptr;
+		aux = aux->sigAd;
+		aux->NombrAd = NA;
+		aux->ContrAd = CA;
+	}
+}
+void agregar_caj(string NC, string CCJ)
+{
+	if (raiz_CA == nullptr)
+	{
+		raiz_CA = new nodo_dC;
+		raiz_CA->NombrCA = NC;
+		raiz_CA->ContrCA = CCJ;
+		raiz_CA->sigCA = nullptr;
+		aux_CA = raiz_CA;
+	}
+	else
+	{
+		aux_CA = raiz_CA;
+		while (aux_CA->sigCA != nullptr)
+		{
+			aux_CA = aux_CA->sigCA;
+		}
+		aux_CA->sigCA = new nodo_dC;
+		aux_CA->sigCA->sigCA = nullptr;
+		aux_CA = aux_CA->sigCA;
+		aux_CA->NombrCA = NC;
+		aux_CA->ContrCA= CCJ;
+	}
+}
+void agregar_cl(string NCL, string EMCL, long long TLC, string ALI)
+{
+	if (raiz_CL == nullptr)
+	{
+		raiz_CL = new nodo_dCL;
+		raiz_CL ->NombrCL = NCL;
+		raiz_CL->Tel = TLC;
+		raiz_CL->EM = EMCL;
+		raiz_CL->Al = ALI;
+		raiz_CL->sigCL= nullptr;
+		aux_CL = raiz_CL;
+	}
+	else
+	{
+		aux_CL = raiz_CL;
+		while (aux_CL->sigCL != nullptr)
+		{
+			aux_CL = aux_CL->sigCL;
+		}
+		aux_CL->sigCL= new nodo_dCL;
+		aux_CL->sigCL->sigCL = nullptr;
+		aux_CL = aux_CL->sigCL;
+		aux_CL->NombrCL = NCL;
+		aux_CL->Tel = TLC;
+		aux_CL->EM = EMCL;
+		aux_CL->Al = ALI;
+	}
+}
+void agregar_prom(string NPR, float PR, int MTPR)
+{
+	if (raiz_PR == nullptr)
+	{
+		raiz_PR = new nodo_PR;
+		raiz_PR->NombrPR = NPR;
+		raiz_PR->prc = PR;
+		raiz_PR->MPR = MTPR;
+		raiz_PR->sigPR = nullptr;
+		aux_PR = raiz_PR;
+	}
+	else
+	{
+		aux_PR = raiz_PR;
+		while (aux_PR->sigPR != nullptr)
+		{
+			aux_PR = aux_PR->sigPR;
+		}
+		aux_PR->sigPR = new nodo_PR;
+		aux_PR->sigPR->sigPR = nullptr;
+		aux_PR = aux_PR->sigPR;
+		aux_PR->NombrPR = NPR;
+		aux_PR->prc = PR;
+		aux_PR->MPR = MTPR;
+
+	}
+}
+void baja_caj(string NC)
+{
+	if (raiz_CA == nullptr)
+	{
+		return;
+	}
+	
+	aux_CA = raiz_CA;
+	if (aux_CA->NombrCA == NC)
+	{
+		raiz_CA = raiz_CA->sigCA;
+		delete aux_CA;
+	}
+	else
+	{
+		while (aux_CA->sigCA != nullptr && aux_CA->sigCA->NombrCA != NC)
+		{
+			aux_CA = aux_CA->sigCA;
+		}
+
+		if (aux_CA->sigCA != nullptr && aux_CA->sigCA->NombrCA == NC)
+		{
+			nodo_dC* temporal = aux_CA->sigCA;
+			aux_CA->sigCA = aux_CA->sigCA->sigCA;
+			delete temporal;
+		}
+	}
+
 
 }
-
-void menuAd()
+void baja_cl(string NCL)
 {
-	int decision = 0, op;
+	if (raiz_CL == nullptr)
+	{
+		return;
+	}
+
+	aux_CL = raiz_CL;
+	if (aux_CL->NombrCL == NCL)
+	{
+		raiz_CL = raiz_CL->sigCL;
+		delete aux_CL;
+	}
+	else
+	{
+		while (aux_CL->sigCL != nullptr && aux_CL->sigCL->NombrCL != NCL)
+		{
+			aux_CL = aux_CL->sigCL;
+		}
+
+		if (aux_CL->sigCL != nullptr && aux_CL->sigCL->NombrCL == NCL)
+		{
+			nodo_dCL* temporal = aux_CL->sigCL;
+			aux_CL->sigCL = aux_CL->sigCL->sigCL;
+			delete temporal;
+		}
+	}
+}
+void menu_Ad()
+{
+	string NombrAd, ContrAd, NombrCA, ContrCA, NombrCL, EM, Al, NombrPR;
+	int decision = 0, op, MPR;
+	float prc;
+	long long Tel;
 	do
 	{
 		cout << "***BIENVENIDO***" << endl;
@@ -108,7 +281,7 @@ void menuAd()
 		cout << "Ingrese 14 para Alta De Consumo " << endl;
 		cout << "Ingrese 15 para ver el Listado De Consumos " << endl;
 		cout << "Ingrese 16 para limnpiar pantalla " << endl;
-		cout << "Ingrese 17 para abrir binario de admin" << endl;
+		cout << "Ingrese 17 para archivo binario" << endl;
 		cout << "Ingrese 18 para salir" << endl;
 		cin >> op;
 
@@ -117,137 +290,160 @@ void menuAd()
 		case 1:
 			do
 			{
-			while (getchar() != '\n');
-			cout << "Ingrese usuario" << endl;
-			cin.getline(adm.NombrAd, 50, '\n');
-			cout << "Ingrese contraseña" << endl;
-			cin.getline(adm.ContrAd, 15, '\n');
-			cout << "¿Dese aregar otro administrador?" << endl;
-			cout << "1-Si     2-No" << endl;
-			cin >> decision;
-			}while (decision == 1);
-			agregar_ADM(adm.NombrAd, adm.ContrAd);
-			return menuAd();
+				while (getchar() != '\n');
+				cout << "Ingrese nombre de usuario" << endl;
+				getline(cin, NombrAd);
+				cout << "Ingrese contraseña" << endl;
+				getline(cin, ContrAd);
+				agregar_adm(NombrAd, ContrAd);
+				cout << "¿Desea agregar otro administrador?" << endl;
+				cout << "1-Si     2-No" << endl;
+				cin >> decision;
+				while (getchar() != '\n');
+			} while (decision == 1);
+			return menu_Ad();
 			break;
 		case 2:
 			do
 			{
 				while (getchar() != '\n');
-				cout << "Ingrese cajero" << endl;
-				cin.getline(caj.NombrCA, 50, '\n');
+				cout << "Ingrese nombre de cajero" << endl;
+				getline(cin, NombrCA);
 				cout << "Ingrese contraseña" << endl;
-				cin.getline(caj.ContrCA, 15, '\n');
-				cout << "¿Dese aregar otro cajero?" << endl;
+				getline(cin, ContrCA);
+				agregar_caj(NombrCA, ContrCA);
+				cout << "¿Desea agregar otro cajero?" << endl;
 				cout << "1-Si     2-No" << endl;
 				cin >> decision;
+				
+			
 			} while (decision == 1);
-			agregar_CAJ(caj.NombrCA, caj.ContrCA);
-			return menuAd();
+		
+			return menu_Ad();
 			break;
 
 		case 3:
-			do {
-				while (getchar() != '\n');
+
+			do 
+			{
+		    	while (getchar() != '\n');
 				cout << "Ingrese cajero a eliminar" << endl;
-				cin.getline(caj.NombrCA, 50, '\n');
-				cout << "Ingrese contraseña a eliminar" << endl;
-				cin.getline(caj.ContrCA, 15, '\n');
-				cout << "¿Dese eleminar otro cajero?" << endl;
+				getline(cin, NombrCA);
+				baja_caj(NombrCA);
+				cout << "¿Dese eliminar otro cajero?" << endl;
 				cout << "1-Si     2-No" << endl;
+				cin >> decision;
+		
 			} while (decision == 1);
-			borrar_CAJ(caj.NombrCA, caj.ContrCA);
-			return menuAd();
+			
+			return menu_Ad();
 			break;
 
 		case 4:
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 5:
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 6:
-			return menuAd();
+			list_usu();
+			return menu_Ad();
 
 			break;
 		case 7:
 			do
 			{
 				while (getchar() != '\n');
-			    cout << "Ingrese cliente" << endl;
-				cin.getline(cli.NombrCL, 30, '\n');
+				cout << "Ingrese nombre de cliente" << endl;
+				getline(cin, NombrCL);
 				cout << "Ingrese alias" << endl;
-				cin.getline(cli.AL, 15, '\n');
-				cout << "Ingrese teléfono" << endl;
-				cin >> cli.TEL;
+				getline(cin, Al);
+				cout << "Ingrese numero de telefono" << endl;
+				cin >> Tel;
 				while (getchar() != '\n');
 				cout << "Ingrese email" << endl;
-				cin.getline(cli.EM, 25, '\n');
-				cout << "¿Dese aregar otro cliente?" << endl;
+				getline(cin, EM);
+				agregar_cl(NombrCL, EM, Tel, Al);
+				cout << "¿Desea agregar otro cliente?" << endl;
 				cout << "1-Si     2-No" << endl;
 				cin >> decision;
+	
 			} while (decision == 1);
-			alta_Cliente(cli.NombrCL, cli.AL, cli.TEL, cli.EM);
-				return menuAd();
+			
+			return menu_Ad();
 			break;
 
 		case 8:
 			do {
 				while (getchar() != '\n');
-				cout << "Ingrese cliente a eliminar" << endl;
-				cin.getline(cli .NombrCL, 30, '\n');
-				cout << "Ingrese alias a eliminar" << endl;
-				cin.getline(cli.AL, 15, '\n');
-				cout << "Ingrese teléfono a eliminar" << endl;
-				cin >> cli.TEL;
-				while (getchar() != '\n');
-				cout << "Ingrese correo a eliminar" << endl;
-				cin.getline(cli.EM, 25, '\n');
-				cout << "¿Dese eleminar otro cajero?" << endl;
+				cout << "Ingrese nombre de cliente a eliminar" << endl;
+				getline(cin, NombrCL);
+				baja_cl(NombrCL);
+				cout << "¿Desea eliminar otro cliente?" << endl;
 				cout << "1-Si     2-No" << endl;
+				cin >> decision;
 			} while (decision == 1);
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 9:
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 10:
-			impr_clien();
-			return menuAd();
+			list_cl();
+			return menu_Ad();
 			break;
 
 		case 11:
-			return menuAd();
+		   do{
+			   while (getchar() != '\n');
+			   cout << "Ingrese nombre de la promocion" << endl;
+			   getline(cin, NombrPR);
+			   do {
+				   cout << "Ingrese el monto de las promociones" << endl;
+				   cin >> MPR;
+			   } while (MPR < 100);
+			   cout << "Ingrese el porcentaje del descuento" << endl;
+			   cin >> prc;
+			   agregar_prom(NombrPR,prc,MPR);
+			   cout << "¿Desea agregar otra promocion?" << endl;
+			   cout << "1-Si     2-No" << endl;
+			   cin >> decision;
+		   } while (decision == 1);
+			return menu_Ad();
 			break;
 
 		case 12:
-			return menuAd();
+			return menu_Ad();
 			break;
 		case 13:
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 14:
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 15:
-			return menuAd();
+			return menu_Ad();
 			break;
 
 		case 16:
 			system("cls");
-			return menuAd();
+			return menu_Ad();
 			break;
 		case 17:
-			leer_archv_adm();
-			abrir_archivoAd();
+			 leer_archv_adm();
+			 abrir_archivoAd();
+			 leer_archv_caj();
+			 abrir_archivoCaj();
+			return menu_Ad();
 			break;
 		case 18:
-			
+
 			break;
 		default:
 			cout << "Opcion incorrecta" << endl;
@@ -256,190 +452,51 @@ void menuAd()
 	} while (decision == 1);
 
 }
-void agregar_ADM(char NA[50], char CA[15])
+void list_cl()
 {
-
-	if (raiz_dA == nullptr)
-	{
-		raiz_dA = new nodo_dA;
-		raiz_dA->NombrAd[50] = NA[50];
-		raiz_dA->ContrAd[15] = CA[15];
-		raiz_dA->siguienteAd = nullptr;
-		raiz_dA->anteriorAd = nullptr;
-		aux_dA = raiz_dA;
-	}
-	else
-	{
-		aux_dA = raiz_dA;
-		while (aux_dA->siguienteAd != nullptr)
+	aux_CL = raiz_CL;
+	if (aux_CL != nullptr)
+	{ 
+		cout << "********CLIENTES*******" << endl;
+		while (aux_CL != nullptr)
 		{
-			aux_dA = aux_dA->siguienteAd;
+			cout << aux_CL->NombrCL << endl;
+			aux_CL = aux_CL->sigCL;
 		}
-		aux_dA->siguienteAd = new nodo_dA;
-		aux_dA->siguienteAd->siguienteAd = nullptr;
-		aux_dA->siguienteAd->anteriorAd = aux_dA;
-		aux_dA = aux_dA->siguienteAd;
-		aux_dA->NombrAd[50] = NA[50];
-		aux_dA->ContrAd[15] = CA[15];
 	}
 }
-void agregar_CAJ(char NCA[50], char CCA[15])
+void list_usu()
 {
-	if (raiz_dC == nullptr)
+	aux = raiz;
+	if (aux != nullptr)
 	{
-		raiz_dC = new nodo_dC;
-		raiz_dC->NombrCA[50] = NCA[50];
-		raiz_dC->ContrCA[15] = CCA[15];
-		raiz_dC->siguienteCA = nullptr;
-		raiz_dC->anteriorCA = nullptr;
-		aux_dC = raiz_dC;
-	}
-	else
-	{
-		aux_dC = raiz_dC;
-		while (aux_dC->siguienteCA != nullptr)
+		cout << "**********ADMINS****************" << endl;
+		while (aux != nullptr)
 		{
-			aux_dC = aux_dC->siguienteCA;
-		}
-		aux_dC->siguienteCA = new nodo_dC;
-		aux_dC->siguienteCA->siguienteCA = nullptr;
-		aux_dC = aux_dC->siguienteCA;
-		aux_dC->NombrCA[50] = NCA[50];
-		aux_dC->ContrCA[15] = CCA[15];
-	}
-	
-}
-void borrar_CAJ(char NCA[50], char CCA[15])
-{
-	//en caso de que la lista este vacia
-	if (raiz_dC == nullptr)
-	{
-		return;
-	}
 
-	//Si el elemento a borrar es el primer nodo
-	aux_dC = raiz_dC;
-	if (aux_dC->NombrCA[50] == NCA[50] && aux_dC->ContrCA[15] == CCA[15])
-	{
-		raiz_dC = raiz_dC->siguienteCA;
-		raiz_dC->anteriorCA = nullptr;
-		delete aux_dC;
+			cout << aux->NombrAd << endl;
+			aux = aux->sigAd;
+		}
 	}
-	else
+	aux_CA = raiz_CA;
+	if (aux_CA != nullptr)
 	{
-		//Si el elemento a borrar es algun nodo de en medio
-		while ((aux_dC != nullptr && aux_dC->NombrCA[50] != NCA[50]) && (aux_dC != nullptr && aux_dC->ContrCA[15] != CCA[15]))
+		cout << "**********CAJEROS****************" << endl;
+		while (aux_CA != nullptr)
 		{
-			aux_dC = aux_dC->siguienteCA;
+
+			cout << aux_CA->NombrCA << endl;
+			aux_CA = aux_CA->sigCA;
 		}
-
-		if (aux_dC != nullptr)
-		{
-			if ((aux_dC->NombrCA[50] == NCA[50]) && (aux_dC->ContrCA[15] == CCA[15]))
-			{
-
-				nodo_dC* temporal = aux_dC;
-				temporal->anteriorCA->siguienteCA = temporal->siguienteCA;
-				if (temporal->siguienteCA != nullptr) //por si es el ultimo de la lista
-				{
-					temporal->siguienteCA->anteriorCA = temporal->anteriorCA;
-				}
-				delete temporal;
-			}
-		}
-
 	}
 
-}
-void alta_Cliente(char NCL[30], char ALC[15], long long TLC, char EMC[25])
-{
-	if (raiz_dCL == nullptr)
-	{
-		raiz_dCL = new nodo_dCL;
-		raiz_dCL->NombrCL[30] = NCL[30];
-		raiz_dCL->AL[15] = ALC[15];
-		raiz_dCL->TEL = TLC;
-		raiz_dCL->EM[15] = EMC[15];
-		raiz_dCL->siguienteCL = nullptr;
-		raiz_dCL->anteriorCL = nullptr;
-		aux_dCL = raiz_dCL;
-	}
-	else
-	{
-		aux_dCL = raiz_dCL;
-		while (aux_dCL->siguienteCL != nullptr)
-		{
-			aux_dCL = aux_dCL->siguienteCL;
-		}
-		aux_dCL->siguienteCL = new nodo_dCL;
-		aux_dCL->siguienteCL->siguienteCL = nullptr;
-		aux_dCL = aux_dCL->siguienteCL;
-		raiz_dCL->NombrCL[30] = NCL[30];
-		aux_dCL->AL[15] = ALC[15];
-		aux_dCL->TEL = TLC;
-		raiz_dCL->EM[25] = EMC[25];
-	}
-
-}
-void baja_Cliente(char NCL[30], char ALC[15], long long TLC, char EMC[25])
-{
-	//en caso de que la lista este vacia
-	if (raiz_dCL == nullptr)
-	{
-		return;
-	}
-
-	//Si el elemento a borrar es el primer nodo
-	aux_dCL = raiz_dCL;
-	if (aux_dCL->NombrCL[30] == NCL[30] && aux_dCL->AL[15] == ALC[15] && aux_dCL->TEL == TLC && aux_dCL->EM[25] == EMC[25])
-	{
-		raiz_dCL = raiz_dCL->siguienteCL;
-		raiz_dCL->anteriorCL = nullptr;
-		delete aux_dCL;
-	}
-	else
-	{
-		//Si el elemento a borrar es algun nodo de en medio
-		while ((aux_dCL != nullptr && aux_dCL->NombrCL[30] != NCL[30]) && (aux_dCL != nullptr && aux_dCL->AL[15] != ALC[15]) && (aux_dCL != nullptr && aux_dCL->TEL  != TLC) && (aux_dCL != nullptr && aux_dCL->EM[25] != EMC[25]))
-		{
-			aux_dCL = aux_dCL->siguienteCL;
-		}
-
-		if (aux_dCL != nullptr)
-		{
-			if ((aux_dCL->NombrCL[30] == NCL[30]) && (aux_dCL->AL[15] == ALC[15]) && (aux_dCL->TEL == TLC) && (aux_dCL->EM[25] == EMC[25]))
-			{
-
-				nodo_dCL* temporal = aux_dCL;
-				temporal->anteriorCL->siguienteCL = temporal->siguienteCL;
-				if (temporal->siguienteCL != nullptr) //por si es el ultimo de la lista
-				{
-					temporal->siguienteCL->anteriorCL = temporal->anteriorCL;
-				}
-				delete temporal;
-			}
-		}
-
-	}
-}
-void impr_clien()
-{
-	aux_dCL = new nodo_dCL;
-	aux_dCL= raiz_dCL;
-
-	while (aux_dCL!= nullptr)
-	{
-		cout << aux_dCL->NombrCL <<endl;
-		aux_dCL = aux_dCL->siguienteCL;
-	
-	}
 }
 void leer_archv_adm()
 {
 	nodo_dA* actual = new nodo_dA;
-	actual->NombrAd[50];
+	actual->NombrAd;
 
-	Archivo.open("Archivo.bin", ios::out | ios::binary);
+	Archivo.open("Admin.bin", ios::out | ios::binary);
 	if (Archivo.is_open())
 	{
 		Archivo.write(reinterpret_cast<char*>(actual), sizeof(nodo_dA));
@@ -449,10 +506,11 @@ void leer_archv_adm()
 		cout << "Unable to open file" << endl;
 	}
 	Archivo.close();
+
 }
 void abrir_archivoAd()
 {
-	Archivo.open("Archivo.bin", ios::in | ios::binary);
+	Archivo.open("Admin.bin", ios::in | ios::binary);
 	if (Archivo.is_open())
 	{
 		int size = Archivo.tellg();
@@ -463,7 +521,7 @@ void abrir_archivoAd()
 		Archivo.read(reinterpret_cast<char*>(Temp), sizeof(nodo_dA));
 
 		nodo_dA lista;
-		lista.NombrAd[50] = Temp->NombrAd[50];
+		lista.NombrAd = Temp->NombrAd;
 		delete Temp;
 	}
 	else
@@ -471,4 +529,45 @@ void abrir_archivoAd()
 		cout << "Unable to open file" << endl;
 	}
 	Archivo.close();
+}
+void leer_archv_caj()
+{
+	nodo_dC* actual = new nodo_dC;
+	actual->NombrCA;
+
+	Archivo.open("Cajeros.bin", ios::out | ios::binary);
+	if (Archivo.is_open())
+	{
+		Archivo.write(reinterpret_cast<char*>(actual), sizeof(nodo_dC));
+	}
+	else
+	{
+		cout << "Unable to open file" << endl;
+	}
+	Archivo.close();
+
+}
+void abrir_archivoCaj()
+{
+	Archivo.open("Cajeros.bin", ios::in | ios::binary);
+	if (Archivo.is_open())
+	{
+		int size = Archivo.tellg();
+
+		int i = 0;
+		nodo_dC* Temp = new nodo_dC;
+		Archivo.seekg(i * sizeof(nodo_dC));
+		Archivo.read(reinterpret_cast<char*>(Temp), sizeof(nodo_dC));
+
+		nodo_dA lista;
+		lista.NombrAd = Temp->NombrCA;
+		delete Temp;
+	}
+	else
+	{
+		cout << "Unable to open file" << endl;
+	}
+	Archivo.close();
+
+
 }
