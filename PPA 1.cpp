@@ -41,7 +41,7 @@ nodo_PR* aux_PR = nullptr;
 
 void agregar_adm(string, string);
 void agregar_caj(string);
-void baja_caj(string, string);
+void baja_caj(string);
 void agregar_cl(string,string, string, long long, string);
 void baja_cl(string);
 void agregar_prom(string, float, int);
